@@ -1,0 +1,12 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.outer-calc {
+    display: flex;
+    margin: 100px auto;
+    height: 500px;
+    width: 400px;
+    border: 1px solid black;
+}
