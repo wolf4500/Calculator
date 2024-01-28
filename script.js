@@ -26,3 +26,6 @@ function operate(valueA, symbol, valueB) {
     }
     return total;
 }
+
+const display = document.querySelector(".display");
+document.querySelector("")
