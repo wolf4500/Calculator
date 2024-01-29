@@ -28,4 +28,9 @@ function operate(valueA, symbol, valueB) {
 }
 
 const display = document.querySelector(".display");
-document.querySelector("")
+const button = document.querySelector(".digits");
+let currentTotal = 0;
+
+button.addEventListener("click", (event) => {
+    console.log(event);
+})
