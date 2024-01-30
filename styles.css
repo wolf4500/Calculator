@@ -19,7 +19,8 @@ body {
     height: 560px;
     border-radius: 10px;
     background-color: lightslategrey;
-    box-shadow: rgba(0, 170, 225, 0.065)
+    box-shadow: rgba(0, 170, 225, 0.065);
+    border: 5px solid black;
 }
 
 .inner-calc {
@@ -30,19 +31,32 @@ body {
     height: 505px;
     border-radius: 5px;
     background-color: black;
+    border: 5px solid black;
 }
 
 .display {
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: end;
     width: 390px;
     height: 100px;
     border-radius: 5px;
-    font-size: 50px;
     margin-top: 5px;
     margin-bottom: 4px;
     background-color: white;
+}
+
+.previousScreen {
+    font-size: 25px;
+    margin-right: 10px;
+}
+ 
+.currentScreen {
+    display: flex;
+    align-items: end;
+    margin-right: 10px;
+    font-size: 50px;
 }
 
 .button-rows{
@@ -73,10 +87,12 @@ body {
     background-color: lightblue;
 }
 
-.operator:hover {
+.operator:hover, 
+.equal:hover {
     background-color: lightsalmon;
 }
 
-.number:hover {
+.number:hover,
+.decimal:hover {
     background-color: lightgreen;
 }

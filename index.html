@@ -9,12 +9,15 @@
   <body>
     <div class="outer-calc">
       <div class="inner-calc">
-        <div class="display">12345</div>
+        <div class="display">
+          <div class="previousScreen"></div>
+          <div class="currentScreen"></div>
+        </div>
         <div class="button-rows">
-          <button class="btn left-operator">AC</button>
-          <button class="btn left-operator">+/-</button>
-          <button class="btn left-operator">%</button>
-          <button class="btn operator">/</button>
+          <button id="clear" class="btn left-operator">AC</button>
+          <button id="sign" class="btn left-operator">+/-</button>
+          <button id="percent" class="btn left-operator">%</button>
+          <button id="divide" class="btn operator">/</button>
         </div>
         <div class="button-rows">
           <button id="seven" class="btn number">7</button>
@@ -32,12 +35,12 @@
           <button id="one" class="btn number">1</button>
           <button id="two" class="btn number">2</button>
           <button id="three" class="btn number">3</button>
-          <button class="btn operator">+</button>
+          <button id="add" class="btn operator">+</button>
         </div>
         <div class="button-rows">
           <button id="zero" class="btn number">0</button>
-          <button class="btn number">.</button>
-          <button class="btn operator">=</button>
+          <button id="decimal" class="btn decimal">.</button>
+          <button id="equal" class="btn equal">=</button>
         </div>
       </div>
     </div>

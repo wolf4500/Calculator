@@ -1,88 +1,143 @@
-function add(a, b) {
-    return a + b;
-}
+let operatorValue = "";
+let previousValue = "";
+let currentValue = "";
+let truthValue = true;
 
-function subtract(a, b) {
-    return a - b;
-}
+document.addEventListener("DOMContentLoaded", function(){
+    // Store all HTML components into JS
+    let numbers = document.querySelectorAll(".number");
+    let operators = document.querySelectorAll(".operator");
 
-function multiply(a, b) {
-    return a * b;
-}
+    let clear = document.querySelector("#clear");
+    let sign = document.querySelector("#sign");
+    let percent = document.querySelector("#percent");
+    let decimal = document.querySelector("#decimal");
+    let equal = document.querySelector("#equal");
 
-function divide(a, b) {
-    return a / b;
-}
+    let previousScreen = document.querySelector(".previousScreen");
+    let currentScreen = document.querySelector(".currentScreen");
 
-let numberA = 3;
-let operator = "+";
-let numberB = 5;
+    // Create event listener for each number
+    numbers.forEach((number) => number.addEventListener("click", (event) => {
+        handleNumber(event.target.textContent);
+        currentScreen.textContent = currentValue;
+    }))
 
+    // Create event listener for each operator
+    operators.forEach((operator) => operator.addEventListener("click", (event) => {
+        handleOperator(event.target.textContent);
+        if(previousValue != "") {
+            if(previousValue.length <= 7) {
+                previousScreen.textContent = `${previousValue} ${operatorValue} `;
+                currentScreen.textContent = currentValue;
+            }
+            else {
+                previousScreen.textContent = `${previousValue.slice(0, 8)}... ${operatorValue} `;
+                currentScreen.textContent = currentValue;
+            }
+        }
+    }))
 
-function operate(valueA, symbol, valueB) {
-    let total = 0;
-    if(symbol == "+") {
-       total = add(valueA, valueB);
-    }
-    return total;
-}
+    // Create event listener for clear 
+    clear.addEventListener("click", () => {
+        previousValue = "";
+        currentValue = "";
+        operatorValue = "";
 
-const display = document.querySelector(".display");
-const button = document.querySelector(".inner-calc");
-let currentDisplay = "";
+        previousScreen.textContent = previousValue;
+        currentScreen.textContent = currentValue;
+    })
 
-button.addEventListener("click", (event) => {
-    if(event.target.id == "seven")
-    {
-        currentDisplay = `${currentDisplay}7`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "eight")
-    {
-        currentDisplay = `${currentDisplay}8`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "nine")
-    {
-        currentDisplay = `${currentDisplay}9`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "four")
-    {
-        currentDisplay = `${currentDisplay}4`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "five")
-    {
-        currentDisplay = `${currentDisplay}5`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "six")
-    {
-        currentDisplay = `${currentDisplay}6`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "one")
-    {
-        currentDisplay = `${currentDisplay}1`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "two")
-    {
-        currentDisplay = `${currentDisplay}2`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "three")
-    {
-        currentDisplay = `${currentDisplay}3`;
-        display.innerHTML = currentDisplay;
-    }
-    if(event.target.id == "zero")
-    {
-        currentDisplay = `${currentDisplay}0`;
-        display.innerHTML = currentDisplay;
-    }
-   
+    // Create event listener for sign
+    sign.addEventListener("click", () => {
+
+        // Switch sign to negative if truthValue is true
+        if (truthValue == true) {
+            currentValue = `-${currentValue}`;
+            truthValue = false;
+            currentScreen.textContent = currentValue;
+        }
+
+        // Switch sign to positive if truthValue is false
+        else {
+            currentValue = currentValue.replace("-", "");
+            truthValue = true;
+            currentScreen.textContent = currentValue;
+        }
+
+    })
+
+    equal.addEventListener("click", () => {
+        if(previousValue != "" && currentValue != "") {
+            calculate();
+            previousValue = "";
+            currentValue = currentValue.toString();
+            previousScreen.textContent = previousValue;
+            
+            if(currentValue == "Infinity") {
+                currentScreen.textContent = "Error";
+                currentValue = "";
+            }
+            else if(currentValue.length <= 7) {
+                currentScreen.textContent = currentValue;
+            }
+            else {
+                currentScreen.textContent = currentValue.slice(0, 8) + "...";
+            }
+        }
+    })
+
+    percent.addEventListener("click", () => {
+        operatorValue = "%";
+        calculate(operatorValue);
+
+        previousScreen.textContent = previousValue + " % =";
+        currentScreen.textContent = currentValue;
+    })
+
+    decimal.addEventListener("click", () => {
+        handleDecimal();
+        currentScreen.textContent = currentValue;
+    })
 })
 
 
+function handleNumber(number) {
+    if(currentValue.length <= 7) {
+        currentValue += number;
+    }
+}
+
+function handleOperator(operator) {
+    operatorValue = operator;
+    previousValue = currentValue;
+    currentValue = "";
+}
+
+function calculate() {
+    previousValue = Number(previousValue);
+    currentValue = Number(currentValue);
+
+    if(operatorValue == "+") {
+        currentValue = previousValue + currentValue;
+    }
+    else if(operatorValue == "-") {
+        currentValue = previousValue - currentValue;
+    }
+    else if(operatorValue == "*") {
+        currentValue = previousValue * currentValue;
+    }
+    else if(operatorValue == "/") {
+        currentValue = previousValue / currentValue;
+    }
+    else if(operatorValue == "%") {
+        previousValue = currentValue;
+        currentValue = currentValue / 100;
+    }
+}
+
+function handleDecimal() {
+    if(!currentValue.includes(".")) {
+        currentValue += ".";
+    }
+}
